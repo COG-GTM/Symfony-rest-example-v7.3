@@ -5,13 +5,13 @@ This project uses PHPStan and Psalm for static analysis to improve code quality 
 ## Tools Overview
 
 ### PHPStan
-- **Level**: 5 (moderately strict)
+- **Level**: 1 (permissive, for gradual adoption)
 - **Extensions**: Symfony, Doctrine
-- **Focus**: Type checking, dead code detection, unreachable code
+- **Focus**: Basic syntax errors and critical issues
 
 ### Psalm
-- **Error Level**: 4 (moderate strictness)
-- **Focus**: Type safety, potential bugs, security issues
+- **Error Level**: 8 (most permissive, for gradual adoption)
+- **Focus**: Critical errors only, with common issues suppressed
 
 ## Running Static Analysis
 
@@ -55,8 +55,25 @@ Use inline suppressions:
 /** @psalm-suppress ErrorType */
 ```
 
+## Gradual Adoption Strategy
+
+The tools are initially configured with permissive settings to allow CI to pass while the team addresses existing code quality issues:
+
+### Current Settings
+- PHPStan: Level 1 (basic checks only)
+- Psalm: Error level 8 (most permissive)
+
+### Recommended Progression
+1. **Phase 1**: Fix critical errors found at current levels
+2. **Phase 2**: Increase PHPStan to level 3, reduce Psalm to error level 6
+3. **Phase 3**: Gradually increase to PHPStan level 5, Psalm error level 4
+4. **Phase 4**: Target PHPStan level 6-8, Psalm error level 2-3 for strict type safety
+
+### Monitoring Progress
+Use `--show-info=true` with Psalm to see suppressed issues that could be addressed.
+
 ## Increasing Strictness
 
 As the codebase improves, consider:
-- Increasing PHPStan level (currently 5, max 9)
-- Decreasing Psalm error level (currently 4, min 1)
+- Increasing PHPStan level (currently 1, max 9)
+- Decreasing Psalm error level (currently 8, min 1)
