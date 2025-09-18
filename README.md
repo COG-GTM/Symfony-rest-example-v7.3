@@ -1,6 +1,6 @@
 # Symfony Sample
 
-Building Symfony RESTful APIs using the latest Symfony, Doctrine, PHPUnit, etc. 
+Building Symfony RESTful APIs using Symfony 7.4+, Doctrine, PHPUnit, etc. 
 
 [![Build](https://github.com/hantsy/symfony-rest-sample/actions/workflows/build.yml/badge.svg)](https://github.com/hantsy/symfony-rest-sample/actions/workflows/build.yml)
 
