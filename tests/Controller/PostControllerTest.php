@@ -20,10 +20,14 @@ class PostControllerTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
 
-        //
         $response = $client->getResponse();
         $data = $response->getContent();
-        $this->assertStringContainsString("Symfony and PHP", $data);
+        $decodedData = json_decode($data, true);
+        $this->assertIsArray($decodedData);
+        $this->assertArrayHasKey('content', $decodedData);
+        $this->assertArrayHasKey('totalElements', $decodedData);
+        $this->assertArrayHasKey('offset', $decodedData);
+        $this->assertArrayHasKey('limit', $decodedData);
     }
 
     public function testWhenGettingNonExistingPost_thenReturn404Status(): void
