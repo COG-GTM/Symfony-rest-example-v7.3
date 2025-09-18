@@ -1,0 +1,4 @@
+when@php84:
+    doctrine:
+        orm:
+            enable_native_lazy_objects: true

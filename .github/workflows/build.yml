@@ -70,13 +70,19 @@ jobs:
 
       - name: Install Composer dependencies
         run: composer install --no-progress --prefer-dist --optimize-autoloader
+        env:
+          APP_ENV: ${{ matrix.php-versions >= '8.4' && 'php84' || 'dev' }}
 
       # —— Static Analysis ——————————————————————————————————————————————————
       - name: Run PHPStan
         run: composer run-script phpstan
+        env:
+          APP_ENV: ${{ matrix.php-versions >= '8.4' && 'php84' || 'dev' }}
 
       - name: Run Psalm
         run: composer run-script psalm
+        env:
+          APP_ENV: ${{ matrix.php-versions >= '8.4' && 'php84' || 'dev' }}
 
       # —— Symfony ——————————————————————————————————————————————————————————
       - name: Check Symfony requirements
@@ -86,6 +92,8 @@ jobs:
           sudo apt install symfony-cli
           symfony check:requirements
           php bin/console -V
+        env:
+          APP_ENV: ${{ matrix.php-versions >= '8.4' && 'php84' || 'dev' }}
       # —— Code style —— (Based on this package: https://github.com/OskarStark/php-cs-fixer-ga)
       #- name: PHP-CS-Fixer
       #  uses: docker://oskarstark/php-cs-fixer-ga
@@ -97,13 +105,19 @@ jobs:
           docker compose up -d database
           sleep 10
           docker ps -a
+        env:
+          APP_ENV: ${{ matrix.php-versions >= '8.4' && 'php84' || 'dev' }}
       - name: Run Migrations
         run: |
           php ./bin/console doctrine:schema:create -n
           php ./bin/console doctrine:fixtures:load --purge-with-truncate -n
+        env:
+          APP_ENV: ${{ matrix.php-versions >= '8.4' && 'php84' || 'dev' }}
 
       # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
       # Docs: https://getcomposer.org/doc/articles/scripts.md
       - name: Run Tests
         run: |
           composer run-script test
+        env:
+          APP_ENV: ${{ matrix.php-versions >= '8.4' && 'php84' || 'dev' }}
