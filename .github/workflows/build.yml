@@ -110,7 +110,6 @@ jobs:
       - name: Run Migrations
         run: |
           php ./bin/console doctrine:schema:create -n
-          php ./bin/console doctrine:fixtures:load --purge-with-truncate -n
         env:
           APP_ENV: ${{ matrix.php-versions >= '8.4' && 'php84' || 'dev' }}
 
