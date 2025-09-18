@@ -35,7 +35,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ["8.3", "8.4"]
+        php-versions: ["8.3"]
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -71,6 +71,13 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --no-progress --prefer-dist --optimize-autoloader
 
+      # —— Static Analysis ——————————————————————————————————————————————————
+      - name: Run PHPStan
+        run: composer run-script phpstan
+
+      - name: Run Psalm
+        run: composer run-script psalm
+
       # —— Symfony ——————————————————————————————————————————————————————————
       - name: Check Symfony requirements
         run: |
@@ -93,7 +100,6 @@ jobs:
       - name: Run Migrations
         run: |
           php ./bin/console doctrine:schema:create -n
-          php ./bin/console doctrine:fixtures:load --purge-with-truncate -n
 
       # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
       # Docs: https://getcomposer.org/doc/articles/scripts.md

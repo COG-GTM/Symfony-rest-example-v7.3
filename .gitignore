@@ -24,3 +24,7 @@ NUL
 .vscode/
 /nbproject/private/
 nbproject/
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###

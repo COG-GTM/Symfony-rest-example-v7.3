@@ -1,0 +1,11 @@
+parameters:
+    level: 1
+    paths:
+        - src
+    excludePaths:
+        - src/Kernel.php
+    ignoreErrors:
+        - '#Attribute class JetBrains\\PhpStorm\\Pure does not exist#'
+includes:
+    - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/phpstan/phpstan-doctrine/extension.neon

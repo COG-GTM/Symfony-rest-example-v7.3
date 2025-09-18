@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="8"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    findUnusedBaselineEntry="true"
+    findUnusedCode="false"
+>
+    <projectFiles>
+        <directory name="src" />
+        <ignoreFiles>
+            <directory name="vendor" />
+            <directory name="var" />
+        </ignoreFiles>
+    </projectFiles>
+    <issueHandlers>
+        <UndefinedAttributeClass errorLevel="suppress" />
+        <MissingOverrideAttribute errorLevel="suppress" />
+        <InvalidOperand errorLevel="suppress" />
+        <ImplicitToStringCast errorLevel="suppress" />
+        <InternalMethod errorLevel="suppress" />
+        <InvalidNullableReturnType errorLevel="suppress" />
+        <NullableReturnStatement errorLevel="suppress" />
+        <NullArgument errorLevel="suppress" />
+        <TypeDoesNotContainNull errorLevel="suppress" />
+        <RedundantCondition errorLevel="suppress" />
+    </issueHandlers>
+</psalm>
