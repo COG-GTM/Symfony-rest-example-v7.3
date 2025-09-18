@@ -71,6 +71,13 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --no-progress --prefer-dist --optimize-autoloader
 
+      # —— Static Analysis ——————————————————————————————————————————————————
+      - name: Run PHPStan
+        run: composer run-script phpstan
+
+      - name: Run Psalm
+        run: composer run-script psalm
+
       # —— Symfony ——————————————————————————————————————————————————————————
       - name: Check Symfony requirements
         run: |
