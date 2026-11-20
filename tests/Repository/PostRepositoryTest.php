@@ -51,4 +51,23 @@ class PostRepositoryTest extends KernelTestCase
         $this->assertEquals("test content", $byId->getContent());
     }
 
+    public function testFindByKeywordCountsAllMatchesAcrossPages(): void
+    {
+        $marker = uniqid('kw');
+        for ($i = 0; $i < 5; $i++) {
+            $this->entityManager->persist(PostFactory::create("{$marker} post {$i}", "content {$i}"));
+        }
+        $this->entityManager->persist(PostFactory::create('other post', "mentions {$marker} in content"));
+        $this->entityManager->persist(PostFactory::create('unrelated post', 'unrelated content'));
+        $this->entityManager->flush();
+
+        $page = $this->postRepository->findByKeyword($marker, 2, 3);
+        $this->assertSame(6, $page->getTotalElements());
+        $this->assertCount(3, $page->getContent());
+
+        $empty = $this->postRepository->findByKeyword(uniqid('none'));
+        $this->assertSame(0, $empty->getTotalElements());
+        $this->assertCount(0, $empty->getContent());
+    }
+
 }

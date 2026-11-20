@@ -8,6 +8,7 @@ use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\Pagination\CountWalker;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -31,9 +32,12 @@ class PostRepository extends ServiceEntityRepository
             ->orderBy('p.createdAt', 'DESC')
             ->setMaxResults($limit)
             ->setFirstResult($offset)
-            ->getQuery();
+            ->getQuery()
+            // no collection joins, so post ids are unique: count without DISTINCT or a subquery
+            ->setHint(CountWalker::HINT_DISTINCT, false);
 
         $paginator = new Paginator($query, $fetchJoinCollection = false);
+        $paginator->setUseOutputWalkers(false);
         $c = count($paginator);
         $content = new ArrayCollection();
         foreach ($paginator as $post) {
